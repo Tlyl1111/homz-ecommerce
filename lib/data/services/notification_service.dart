@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/notification.dart';
+import '../../features/personalization/models/notification.dart';
 
 class NotificationService {
   final _notiRef = FirebaseFirestore.instance.collection('notifications');

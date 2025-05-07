@@ -8,13 +8,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Trang chủ"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-            },
-          ),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.logout), onPressed: () {})],
       ),
       body: const Center(child: Text("Welcom toHomz!")),
     );
