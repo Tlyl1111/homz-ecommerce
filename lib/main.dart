@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/features/personalization/screens/theme_preview.dart';
 import 'package:flutter_application_1/utils/theme/theme.dart';
 import 'common/home_screen.dart';
 
@@ -15,6 +16,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: HAppTheme.lightTheme,
       darkTheme: HAppTheme.darkTheme,
+      home: const ThemePreviewScreen(),
     );
   }
 }
