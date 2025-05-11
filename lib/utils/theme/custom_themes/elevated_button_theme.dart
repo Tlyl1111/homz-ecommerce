@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/constants/colors.dart';
+import 'package:flutter_application_1/utils/theme/custom_themes/text_theme.dart';
 
 class HElevatedButtonTheme {
   HElevatedButtonTheme._();
@@ -6,35 +8,25 @@ class HElevatedButtonTheme {
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.blue,
-      disabledForegroundColor: Colors.grey,
-      disabledBackgroundColor: Colors.grey,
-      side: const BorderSide(color: Colors.blue),
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      textStyle: const TextStyle(
-        fontSize: 16,
-        color: Colors.white,
-        fontWeight: FontWeight.w600,
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      foregroundColor: HColors.white,
+      backgroundColor: HColors.green500,
+      disabledForegroundColor: HColors.white,
+      disabledBackgroundColor: HColors.green100,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      textStyle: HTextTheme.lightTextTheme.body16Medium,
+      shape: const StadiumBorder(),
     ),
   );
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.blue,
-      disabledForegroundColor: Colors.grey,
-      disabledBackgroundColor: Colors.grey,
-      side: const BorderSide(color: Colors.blue),
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      textStyle: const TextStyle(
-        fontSize: 16,
-        color: Colors.white,
-        fontWeight: FontWeight.w600,
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      foregroundColor: HColors.white,
+      backgroundColor: HColors.green500,
+      disabledForegroundColor: HColors.white,
+      disabledBackgroundColor: HColors.green100,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      textStyle: HTextTheme.lightTextTheme.body16Medium,
+      shape: const StadiumBorder(),
     ),
   );
 }
