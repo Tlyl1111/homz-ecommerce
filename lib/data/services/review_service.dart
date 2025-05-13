@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/review.dart';
+import '../../features/shop/models/review.dart';
 
 class ReviewService {
   final _reviewsRef = FirebaseFirestore.instance.collection('reviews');

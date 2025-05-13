@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'package:flutter_application_1/features/personalization/screens/theme_preview.dart';
+import 'package:flutter_application_1/utils/theme/theme.dart';
+import 'common/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Homz',
-      home: HomeScreen(), 
+      themeMode: ThemeMode.system,
+      theme: HAppTheme.lightTheme,
+      darkTheme: HAppTheme.darkTheme,
+      home: const ThemePreviewScreen(),
     );
   }
 }

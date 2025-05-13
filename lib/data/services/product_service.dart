@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/product.dart';
+import '../../features/shop/models/product.dart';
 
 class ProductService {
   final _productsRef = FirebaseFirestore.instance.collection('products');
