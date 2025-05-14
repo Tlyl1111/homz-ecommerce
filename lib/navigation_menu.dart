@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/constants/colors.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_application_1/utils/theme/custom_themes/text_theme.dart';
+import 'package:flutter_application_1/features/shop/screens/camera_scan_screen.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -23,13 +22,23 @@ class NavigationMenu extends StatelessWidget {
           destinations: [
             _navItem(Iconsax.home, 'Home', 0, controller),
             _navItem(Iconsax.category, 'Cate', 1, controller),
-            _navItem(Iconsax.shopping_cart, 'Cart', 2, controller),
+            _navItem(Iconsax.camera, 'Scan', 2, controller),
             _navItem(Iconsax.heart, 'Favorite', 3, controller),
             _navItem(Iconsax.user, 'Profile', 4, controller),
           ],
         ),
       ),
       body: Obx(() => controller.screens[controller.selectedIndex.value]),
+      floatingActionButton: Obx(() => controller.selectedIndex.value == 2
+          ? FloatingActionButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CameraScanScreen()),
+              ),
+              backgroundColor: HColors.green500,
+              child: const Icon(Icons.camera_alt, color: Colors.white),
+            )
+          : const SizedBox()),
     );
   }
 }
@@ -40,7 +49,23 @@ class NavigationController extends GetxController {
   final screens = [
     Container(color: Colors.green),
     Container(color: Colors.purple),
-    Container(color: Colors.orange),
+    Container(
+      color: Colors.orange,
+      child: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.camera_alt, size: 64, color: Colors.white),
+            SizedBox(height: 16),
+            Text(
+              'Tap the camera button to start scanning',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    ),
     Container(color: Colors.blue),
     Container(color: Colors.pink),
   ];
