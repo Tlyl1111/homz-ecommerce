@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/constants/colors.dart';
 import 'package:flutter_application_1/utils/theme/custom_themes/text_theme.dart';
 import 'package:flutter_application_1/data/services/mock_data_service.dart';
+import 'package:flutter_application_1/data/services/gemini_service.dart';
 import 'package:flutter_application_1/features/shop/models/product.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,10 @@ class _ScanResultsScreenState extends State<ScanResultsScreen> {
   List<Product> _matchingProducts = [];
   bool _isAnalyzing = true;
   String _detectedCategory = '';
+  String _productName = '';
+  double _confidence = 0.0;
+  String _analysisDescription = '';
+  List<String> _suggestions = [];
 
   @override
   void initState() {
@@ -27,49 +32,35 @@ class _ScanResultsScreenState extends State<ScanResultsScreen> {
   }
 
   Future<void> _analyzeImage() async {
-    // Simulate image analysis delay
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Mock AI analysis - in real app, this would call an AI service
-    List<String> mockDetectedKeywords = _getMockAnalysisResult();
-    
-    // Search for matching products
-    List<Product> results = MockDataService.searchProductsByKeywords(mockDetectedKeywords);
-    
-    setState(() {
-      _matchingProducts = results;
-      _detectedCategory = _getCategoryFromKeywords(mockDetectedKeywords);
-      _isAnalyzing = false;
-    });
-  }
-
-  List<String> _getMockAnalysisResult() {
-    // Mock different results based on time to simulate variety
-    final scenarios = [
-      ['phone', 'electronics', 'mobile'],
-      ['chair', 'furniture', 'office'],
-      ['shoes', 'clothing', 'sneakers'],
-      ['laptop', 'computer', 'electronics'],
-      ['table', 'furniture', 'wooden'],
-    ];
-    
-    final randomIndex = DateTime.now().millisecond % scenarios.length;
-    return scenarios[randomIndex];
-  }
-
-  String _getCategoryFromKeywords(List<String> keywords) {
-    final categories = MockDataService.getCategories();
-    
-    for (var category in categories) {
-      for (var keyword in keywords) {
-        if (category.keywords.contains(keyword.toLowerCase()) ||
-            category.name.toLowerCase().contains(keyword.toLowerCase())) {
-          return category.name;
-        }
-      }
+    try {
+      // Use Gemini AI to analyze the image
+      final analysisResult = await GeminiService.analyzeProductImage(widget.imagePath);
+      
+      // Extract analysis results
+      final keywords = List<String>.from(analysisResult['keywords'] ?? []);
+      
+      // Search for matching products using the AI-detected keywords
+      List<Product> results = MockDataService.searchProductsByKeywords(keywords);
+      
+      setState(() {
+        _matchingProducts = results;
+        _detectedCategory = analysisResult['category'] ?? 'General';
+        _productName = analysisResult['productName'] ?? 'Unknown Product';
+        _confidence = (analysisResult['confidence'] ?? 0.0).toDouble();
+        _analysisDescription = analysisResult['description'] ?? '';
+        _suggestions = List<String>.from(analysisResult['suggestions'] ?? []);
+        _isAnalyzing = false;
+      });
+    } catch (e) {
+      print('Analysis error: $e');
+      setState(() {
+        _detectedCategory = 'Error';
+        _productName = 'Analysis Failed';
+        _confidence = 0.0;
+        _analysisDescription = 'Failed to analyze image: $e';
+        _isAnalyzing = false;
+      });
     }
-    
-    return 'General';
   }
 
   @override
@@ -110,23 +101,60 @@ class _ScanResultsScreenState extends State<ScanResultsScreen> {
                 children: [
                   CircularProgressIndicator(color: HColors.green500),
                   SizedBox(height: 16),
-                  Text('Analyzing image...'),
+                  Text('Analyzing image with AI...'),
                 ],
               ),
             ),
           ] else ...[
-            // Results Header
+            // AI Analysis Results
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Icon(Icons.category, color: HColors.green500),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Category: $_detectedCategory',
-                    style: Theme.of(context).textTheme.titleSmall,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.smart_toy, color: HColors.green500),
+                          const SizedBox(width: 8),
+                          Text(
+                            'AI Analysis',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Product: $_productName',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Text('Category: $_detectedCategory'),
+                          const Spacer(),
+                          Text(
+                            'Confidence: ${(_confidence * 100).toInt()}%',
+                            style: TextStyle(
+                              color: _confidence > 0.7 ? Colors.green : 
+                                     _confidence > 0.4 ? Colors.orange : Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (_analysisDescription.isNotEmpty) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          _analysisDescription,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             
@@ -149,13 +177,27 @@ class _ScanResultsScreenState extends State<ScanResultsScreen> {
             // Products List
             Expanded(
               child: _matchingProducts.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.search_off, size: 64, color: Colors.grey),
-                          SizedBox(height: 16),
-                          Text('No matching products found'),
+                          const Icon(Icons.search_off, size: 64, color: Colors.grey),
+                          const SizedBox(height: 16),
+                          const Text('No matching products found'),
+                          if (_suggestions.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            const Text('Try searching for:'),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 8,
+                              children: _suggestions.map((suggestion) =>
+                                Chip(
+                                  label: Text(suggestion),
+                                  backgroundColor: HColors.green500.withOpacity(0.1),
+                                ),
+                              ).toList(),
+                            ),
+                          ],
                         ],
                       ),
                     )
