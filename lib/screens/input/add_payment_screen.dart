@@ -90,29 +90,33 @@ class AddPaymentScreen extends StatelessWidget {
           style: kMerriweatherBold16,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          physics: const BouncingScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               CustomInputBox(
-                headerText: "Cardholder Name",
-                hintText: "Ex: John Doe",
+                  headerText: "CardholderName",
+                  hintText: "Ex: Aditya R",
                 textInputType: TextInputType.name,
-                onChanged: _cardHolderNameOnChanged,
-                validator: _cardHolderNameValidator,
+                  onChanged: _nameOnChanged,
+                  validator: _nameValidator,
               ),
-              const SizedBox(height: 24),
               CustomInputBox(
                 headerText: "Card Number",
-                hintText: "1234 5678 9012 3456",
+                  hintText: "Ex: XXXX XXXX XXXX 3456",
                 textInputType: TextInputType.number,
-                maxLength: 16,
+                  maxLength: 20,
+                  inputFormatters: [CreditCardFormatter()],
                 onChanged: _cardNumberOnChanged,
                 validator: _cardNumberValidator,
               ),
-              const SizedBox(height: 24),
               Row(
                 children: [
                   Expanded(
@@ -129,9 +133,9 @@ class AddPaymentScreen extends StatelessWidget {
                   Expanded(
                     child: CustomInputBox(
                       headerText: "CVV",
-                      hintText: "123",
-                      textInputType: TextInputType.number,
+                        hintText: "Ex: 123",
                       maxLength: 3,
+                        obscureText: true,
                       onChanged: _cvvOnChanged,
                       validator: _cvvValidator,
                     ),
