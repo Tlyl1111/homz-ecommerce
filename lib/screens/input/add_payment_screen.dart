@@ -75,18 +75,19 @@ class AddPaymentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back_ios_new, color: kOffBlack),
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: kOffBlack,
+            size: 20,
+          ),
         ),
         centerTitle: true,
         title: const Text(
           "ADD PAYMENT METHOD",
-          style: TextStyle(
-            fontFamily: 'popins',
-            fontSize: 16,
-            color: kOffBlack,
-            fontWeight: FontWeight.w600,
-          ),
+          style: kMerriweatherBold16,
         ),
       ),
       body: Padding(
@@ -135,19 +136,24 @@ class AddPaymentScreen extends StatelessWidget {
                       validator: _cvvValidator,
                     ),
                   ),
+                    const SizedBox(width: 18),
+                    Expanded(
+                      child: CustomInputBox(
+                        headerText: "Expiration Date",
+                        hintText: "Ex: 04/22",
+                        maxLength: 5,
+                        textInputAction: TextInputAction.done,
+                        inputFormatters: [DateFormatter()],
+                        onChanged: _dateOnChanged,
+                        validator: _dateValidator,
+                      ),
+                    ),
                 ],
               ),
-              const Spacer(),
-              CustomButton(
-                height: 50,
+                const SizedBox(height: 24),
+                CustomElevatedButton(
                 onTap: _addCard,
-                child: const Text(
-                  "Add Card",
-                  style: TextStyle(
-                    fontFamily: 'popins',
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+                  text: "ADD NEW CARD",
                   ),
                 ),
               ),
