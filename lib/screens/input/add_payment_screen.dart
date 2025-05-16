@@ -1,66 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timberr/constants.dart';
-import 'package:timberr/controllers/add_payment_controller.dart';
+import 'package:timberr/controllers/card_details_controller.dart';
 import 'package:timberr/widgets/buttons/custom_button.dart';
-import 'package:timberr/widgets/cards/payment_card_view.dart';
 import 'package:timberr/widgets/input/custom_input_box.dart';
 
 class AddPaymentScreen extends StatelessWidget {
   AddPaymentScreen({super.key});
   final _formKey = GlobalKey<FormState>();
-  final _controller = Get.put(AddPaymentController());
-  void _addCard() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _controller.addCardDetail();
+  final CardDetailsController _cardController = Get.find();
+
+  void _cardHolderNameOnChanged(String val) {
+    _cardController.cardHolderName = val;
+  }
+
+  String? _cardHolderNameValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return "Please enter cardholder name";
+    } else {
+      return null;
     }
   }
 
-  void _nameOnChanged(String val) {
-    _controller.name.value = val;
+  void _cardNumberOnChanged(String val) {
+    _cardController.cardNumber = val;
   }
 
-  void _cardNumberOnChanged(String val) {
-    _controller.cardNumber = int.parse(val.replaceAll(" ", ""));
-    if (val.length >= 16) {
-      _controller.lastFourDigits.value = val.substring(15);
+  String? _cardNumberValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return "Please enter card number";
+    } else if (val!.length != 16) {
+      return "Card number must be 16 digits";
     } else {
-      _controller.lastFourDigits.value = "";
+      return null;
+    }
+  }
+
+  void _expiryDateOnChanged(String val) {
+    _cardController.expiryDate = val;
+  }
+
+  String? _expiryDateValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return "Please enter expiry date";
+    } else if (!RegExp(r'^\d{2}/\d{2}$').hasMatch(val!)) {
+      return "Please enter valid date (MM/YY)";
+    } else {
+      return null;
     }
   }
 
   void _cvvOnChanged(String val) {
-    _controller.cvv = int.parse(val);
-  }
-
-  void _dateOnChanged(String val) {
-    _controller.dateString.value = val;
-    if (val.length == 5) {
-      _controller.month = int.parse(val[0] + val[1]);
-      _controller.year = int.parse(val[3] + val[4]);
-    }
-  }
-
-  String? _nameValidator(String? val) {
-    return (val?.isNotEmpty ?? false) ? null : "Enter a name";
-  }
-
-  String? _cardNumberValidator(String? val) {
-    return (val != null && val.length == 20)
-        ? null
-        : "Enter a Valid Credit Card Number";
+    _cardController.cvv = val;
   }
 
   String? _cvvValidator(String? val) {
-    return (val != null && val.length == 3) ? null : "Enter CVV";
+    if (val?.isEmpty ?? true) {
+      return "Please enter CVV";
+    } else if (val!.length != 3) {
+      return "CVV must be 3 digits";
+    } else {
+      return null;
+    }
   }
 
-  String? _dateValidator(String? val) {
-    return (_controller.month > 0 &&
-            _controller.month < 13 &&
-            _controller.year > 21)
-        ? null
-        : "Enter a Valid Date";
+  void _addCard() {
+    if (_formKey.currentState!.validate()) {
+      _cardController.addCard();
+    }
   }
 
   @override
@@ -68,105 +75,83 @@ class AddPaymentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: kOffBlack,
-            size: 20,
-          ),
+          onPressed: () => Get.back(),
+          icon: const Icon(Icons.arrow_back_ios_new, color: kOffBlack),
         ),
         centerTitle: true,
         title: const Text(
           "ADD PAYMENT METHOD",
           style: TextStyle(
-            fontFamily: "Poppins",
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
+            fontFamily: 'popins',
+            fontSize: 16,
             color: kOffBlack,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Obx(
-                  () {
-                    return PaymentCardView(
-                      cardHolderName: (_controller.name.isEmpty)
-                          ? "XXXXXX"
-                          : _controller.name.value,
-                      expiryDateString: (_controller.dateString.isEmpty)
-                          ? "XX/XX"
-                          : _controller.dateString.value,
-                      lastFourDigits: (_controller.lastFourDigits.isEmpty)
-                          ? "XXXX"
-                          : _controller.lastFourDigits.value,
-                    );
-                  },
-                ),
-                const SizedBox(height: 30),
-                CustomInputBox(
-                  headerText: "CardholderName",
-                  hintText: "Ex: Aditya R",
-                  textInputType: TextInputType.name,
-                  onChanged: _nameOnChanged,
-                  validator: _nameValidator,
-                ),
-                const SizedBox(height: 16),
-                CustomInputBox(
-                  headerText: "Card Number",
-                  hintText: "Ex: XXXX XXXX XXXX 3456",
-                  textInputType: TextInputType.number,
-                  maxLength: 20,
-                  inputFormatters: [CreditCardFormatter()],
-                  onChanged: _cardNumberOnChanged,
-                  validator: _cardNumberValidator,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomInputBox(
-                        headerText: "CVV",
-                        hintText: "Ex: 123",
-                        maxLength: 3,
-                        obscureText: true,
-                        onChanged: _cvvOnChanged,
-                        validator: _cvvValidator,
-                      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              CustomInputBox(
+                headerText: "Cardholder Name",
+                hintText: "Ex: John Doe",
+                textInputType: TextInputType.name,
+                onChanged: _cardHolderNameOnChanged,
+                validator: _cardHolderNameValidator,
+              ),
+              const SizedBox(height: 24),
+              CustomInputBox(
+                headerText: "Card Number",
+                hintText: "1234 5678 9012 3456",
+                textInputType: TextInputType.number,
+                maxLength: 16,
+                onChanged: _cardNumberOnChanged,
+                validator: _cardNumberValidator,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomInputBox(
+                      headerText: "Expiry Date",
+                      hintText: "MM/YY",
+                      textInputType: TextInputType.datetime,
+                      maxLength: 5,
+                      onChanged: _expiryDateOnChanged,
+                      validator: _expiryDateValidator,
                     ),
-                    const SizedBox(width: 18),
-                    Expanded(
-                      child: CustomInputBox(
-                        headerText: "Expiration Date",
-                        hintText: "Ex: 04/22",
-                        maxLength: 5,
-                        textInputAction: TextInputAction.done,
-                        inputFormatters: [DateFormatter()],
-                        onChanged: _dateOnChanged,
-                        validator: _dateValidator,
-                      ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: CustomInputBox(
+                      headerText: "CVV",
+                      hintText: "123",
+                      textInputType: TextInputType.number,
+                      maxLength: 3,
+                      onChanged: _cvvOnChanged,
+                      validator: _cvvValidator,
                     ),
-                  ],
+                  ),
+                ],
+              ),
+              const Spacer(),
+              CustomButton(
+                height: 50,
+                onTap: _addCard,
+                child: const Text(
+                  "Add Card",
+                  style: TextStyle(
+                    fontFamily: 'popins',
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(height: 24),
-                CustomButton(
-                  height: 52,
-                  onTap: _addCard,
-                  child: const Text("ADD NEW CARD"),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
