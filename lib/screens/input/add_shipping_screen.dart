@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/widgets/buttons/custom_button.dart';
+import 'package:timberr/widgets/input/custom_dropdown_box.dart';
 import 'package:timberr/widgets/input/custom_input_box.dart';
 
 class AddShippingScreen extends StatelessWidget {
@@ -43,9 +44,35 @@ class AddShippingScreen extends StatelessWidget {
       return "Please enter your pincode";
     } else if (!val!.isNum) {
       return "Please enter a valid pincode";
+    } else if (val.length != 6) {
+      return "Pincode must be 6 characters long";
     } else {
       return null;
     }
+  }
+
+  void _countryOnChanged(String val) {
+    _addressController.country = val;
+  }
+
+  String? _countryValidator(val) {
+    return (val == null) ? "Please Select the Country" : null;
+  }
+
+  void _cityOnChanged(String val) {
+    _addressController.city = val;
+  }
+
+  String? _cityValidator(val) {
+    return (val == null) ? "Please Select the City" : null;
+  }
+
+  void _districtOnChanged(String val) {
+    _addressController.district = val;
+  }
+
+  String? _districtValidator(val) {
+    return (val == null) ? "Please Select the District" : null;
   }
 
   void _uploadAddress() {
@@ -59,48 +86,125 @@ class AddShippingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back_ios_new, color: kOffBlack),
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: kOffBlack,
+            size: 20,
+          ),
         ),
         centerTitle: true,
-        title: const Text("ADD SHIPPING ADDRESS"),
+        title: const Text(
+          "ADD SHIPPING ADDRESS",
+          style: TextStyle(
+            fontFamily: 'popins',
+            fontSize: 16,
+            color: kOffBlack,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              CustomInputBox(
-                headerText: "Full name",
-                hintText: "Ex: Aditya R",
-                textInputType: TextInputType.name,
-                onChanged: _nameOnChanged,
-                validator: _nameValidator,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              key: _formKey,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top,
+                child: Column(
+                  children: [
+                    CustomInputBox(
+                      headerText: "Full name",
+                      hintText: "Ex: Aditya R",
+                      textInputType: TextInputType.name,
+                      onChanged: _nameOnChanged,
+                      validator: _nameValidator,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomInputBox(
+                      headerText: "Address",
+                      hintText: "Ex: 87 Church Street",
+                      textInputType: TextInputType.streetAddress,
+                      onChanged: _addressOnChanged,
+                      validator: _addressValidator,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomInputBox(
+                      headerText: "Zipcode (Postal Code)",
+                      hintText: "Ex: 600014",
+                      maxLength: 6,
+                      textInputAction: TextInputAction.done,
+                      onChanged: _pincodeOnChanged,
+                      validator: _pincodeValidator,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomDropdownBox(
+                      // headerText: "Country",
+                      hintText: "Select Country",
+                      items: const [
+                        DropdownMenuItem(
+                          value: "India",
+                          child: Text("India"),
+                        )
+                      ],
+                      onChanged: _countryOnChanged,
+                      validator: _countryValidator,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomDropdownBox(
+                      // headerText: "City",
+                      hintText: "Select City",
+                      items: const [
+                        DropdownMenuItem(
+                          value: "Chennai",
+                          child: Text("Chennai"),
+                        )
+                      ],
+                      onChanged: _cityOnChanged,
+                      validator: _cityValidator,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomDropdownBox(
+                      // headerText: "District",
+                      hintText: "Select District",
+                      items: const [
+                        DropdownMenuItem(
+                          value: "Mylapore",
+                          child: Text("Mylapore"),
+                        )
+                      ],
+                      onChanged: _districtOnChanged,
+                      validator: _districtValidator,
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: CustomButton(
+                          height: 50,
+                          onTap: _uploadAddress,
+                          child: const Text(
+                            "Save Address",
+                            style: TextStyle(
+                              fontFamily: 'popins',
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 20),
-              CustomInputBox(
-                headerText: "Address",
-                hintText: "Ex: 87 Church Street",
-                textInputType: TextInputType.streetAddress,
-                onChanged: _addressOnChanged,
-                validator: _addressValidator,
-              ),
-              const SizedBox(height: 20),
-              CustomInputBox(
-                headerText: "Zipcode (Postal Code)",
-                hintText: "Ex: 600014",
-                maxLength: 6,
-                onChanged: _pincodeOnChanged,
-                validator: _pincodeValidator,
-              ),
-              const Spacer(),
-              CustomButton(
-                height: 50,
-                onTap: _uploadAddress,
-                child: const Text("Save Address"),
-              ),
-            ],
+            ),
           ),
         ),
       ),
