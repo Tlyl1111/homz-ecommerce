@@ -22,11 +22,11 @@ dependencies:
 
   # State Management
   get: ^4.6.5
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
   
   flutter_lints: ^5.0.0
