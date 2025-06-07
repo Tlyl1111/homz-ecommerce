@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/common/widgets/appbar/appbar.dart';
+import 'package:flutter_application_1/navigation_menu.dart';
+import 'package:flutter_application_1/utils/constants/colors.dart';
+import 'package:flutter_application_1/utils/theme/custom_themes/text_theme.dart';
+import 'package:flutter_application_1/utils/theme/theme.dart';
+
+class ThemePreviewScreen extends StatelessWidget {
+  const ThemePreviewScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: HAppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Homescreen',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineLarge?.apply(color: Colors.green),
+            ),
+            Text(
+              'Subtitle',
+              style: Theme.of(
+                context,
+              ).textTheme.labelMedium?.apply(color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Your main content widgets go here
+          ],
+        ),
+      ),
+    );
+  }
+}
