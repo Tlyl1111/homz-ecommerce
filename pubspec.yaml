@@ -18,11 +18,11 @@ dependencies:
 
   # Icons
   cupertino_icons: ^1.0.8
+  iconsax: ^0.1.0
   cloud_firestore: ^4.15.1
 
   # State Management
   get: ^4.6.5
-  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
