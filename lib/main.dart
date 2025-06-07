@@ -6,6 +6,7 @@ import 'package:timberr/constants.dart';
 import 'package:timberr/utils/app_routes.dart';
 import 'package:timberr/wrapper.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
@@ -37,6 +38,7 @@ class HomzApp extends StatelessWidget {
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.routes,
       home: const Wrapper(),
+
     );
   }
 }
