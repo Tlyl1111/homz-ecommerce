@@ -5,11 +5,19 @@ class Product {
   final String name;
   final int price;
   final String description;
+  final String featured;
   final int categoryId;
   late final List<Color> colorsList;
   final List<String> imagesList;
-  Product(this.productId, this.name, this.price, this.description,
-      this.categoryId, List<String> colorsStringList, this.imagesList) {
+  Product(
+      this.productId,
+      this.name,
+      this.price,
+      this.description,
+      this.categoryId,
+      List<String> colorsStringList,
+      this.imagesList,
+      this.featured) {
     colorsList = colorsStringList
         .map((colorString) => colorFromString(colorString))
         .toList();
@@ -24,7 +32,8 @@ class Product {
         json['categoryId'],
         json['colorsList'].toString().split(",").toList()
           ..map((e) => colorFromString(e)).toList(),
-        json['imagesList'].toString().split(",").toList());
+        json['imagesList'].toString().split(",").toList(),
+        json['featured']);
   }
   Map<String, dynamic> toJson() {
     return {
@@ -34,7 +43,8 @@ class Product {
       'description': description,
       'categoryId': categoryId,
       'colorsList': colorsList.map((e) => colorToString(e)).toList(),
-      'imagesList': imagesList
+      'imagesList': imagesList.join(","),
+      'featured': featured,
     };
   }
 
@@ -117,5 +127,46 @@ String colorToString(Color color) {
     return "yellow";
   } else {
     return "white";
+  }
+}
+
+extension StringExtension on String {
+  Color colorFromString(String colorString) {
+    switch (colorString) {
+      case 'red':
+        return Colors.red;
+      case 'green':
+        return Colors.green;
+      case 'blue':
+        return Colors.blue;
+      case 'white':
+        return Colors.white;
+      case 'black':
+        return Colors.black;
+      case 'purple':
+        return Colors.purple;
+      case 'orange':
+        return Colors.orange;
+      case 'indigo':
+        return Colors.indigo;
+      case 'teal':
+        return Colors.teal;
+      case 'grey':
+        return Colors.grey;
+      case 'amber':
+        return Colors.amber;
+      case 'cyan':
+        return Colors.cyan;
+      case 'brown':
+        return Colors.brown;
+      case 'lime':
+        return Colors.lime;
+      case 'pink':
+        return Colors.pink;
+      case 'yellow':
+        return Colors.yellow;
+      default:
+        return Colors.white;
+    }
   }
 }
