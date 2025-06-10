@@ -147,11 +147,11 @@ class AddShippingScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     CustomDropdownBox(
                       // headerText: "Country",
-                      hintText: "Select City",
+                      hintText: "Select Country",
                       items: const [
                         DropdownMenuItem(
-                          value: "Ho Chi Minh City",
-                          child: Text("Ho Chi Minh City"),
+                          value: "India",
+                          child: Text("India"),
                         )
                       ],
                       onChanged: _countryOnChanged,
@@ -160,12 +160,12 @@ class AddShippingScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     CustomDropdownBox(
                       // headerText: "City",
-                      hintText: "Select District",
+                      hintText: "Select City",
                       items: const [
                         DropdownMenuItem(
-                          value: "District 1",
-                          child: Text("District 1"),
-                        ),
+                          value: "Chennai",
+                          child: Text("Chennai"),
+                        )
                       ],
                       onChanged: _cityOnChanged,
                       validator: _cityValidator,
@@ -173,12 +173,12 @@ class AddShippingScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     CustomDropdownBox(
                       // headerText: "District",
-                      hintText: "Select Ward",
+                      hintText: "Select District",
                       items: const [
                         DropdownMenuItem(
-                          value: "Ward 1",
-                          child: Text("Ward 1"),
-                        ),
+                          value: "Mylapore",
+                          child: Text("Mylapore"),
+                        )
                       ],
                       onChanged: _districtOnChanged,
                       validator: _districtValidator,
