@@ -11,7 +11,9 @@ import 'package:timberr/binding/order_binding.dart';
 import 'package:timberr/binding/payment_binding.dart';
 import 'package:timberr/binding/product_binding.dart';
 import 'package:timberr/binding/profile_binding.dart';
+import 'package:timberr/binding/review_binding.dart';
 import 'package:timberr/binding/shipping_binding.dart';
+import 'package:timberr/binding/track_order_binding.dart';
 import 'package:timberr/models/category.dart';
 import 'package:timberr/models/product.dart';
 import 'package:timberr/screens/authentication/forgot_password_screen.dart';
@@ -33,8 +35,11 @@ import 'package:timberr/screens/profile/my_reviews_screen.dart';
 import 'package:timberr/screens/profile/orders_screen.dart';
 import 'package:timberr/screens/profile/payment_methods_screen.dart';
 import 'package:timberr/screens/profile/profile_screen.dart';
+import 'package:timberr/screens/profile/review_order_screen.dart';
 import 'package:timberr/screens/profile/settings_screen.dart';
 import 'package:timberr/screens/profile/shipping_address_screen.dart';
+import 'package:timberr/screens/profile/track_order_screen.dart';
+import 'package:timberr/screens/qr_screen.dart';
 import 'package:timberr/wrapper.dart';
 
 import '../screens/authentication/login_screen.dart';
@@ -63,6 +68,9 @@ class AppRoutes {
   static const String settings = '/settings';
   static const String category = '/category';
   static const String detailCategory = '/detailCategory';
+  static const String trackOrder = '/trackOrder';
+  static const String reviewOrder = '/reviewOrder';
+  static const String qr = '/qr';
 
   static List<GetPage> routes = [
     GetPage(name: initialRoute, page: () => const SplashScreen()),
@@ -97,6 +105,13 @@ class AppRoutes {
     GetPage(
       name: home,
       page: () => const Home(),
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: qr,
+      page: () => const QRScreen(),
       binding: HomeBinding(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
@@ -153,6 +168,24 @@ class AppRoutes {
         return DetailCategoryScreen(category: category);
       },
       binding: DetailCategoryBinding(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: trackOrder,
+      page: () {
+        return const TrackOrderScreen();
+      },
+      binding: TrackOrderBinding(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: reviewOrder,
+      page: () {
+        return const ReviewOrderScreen();
+      },
+      binding: ReviewBinding(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 300),
     ),
