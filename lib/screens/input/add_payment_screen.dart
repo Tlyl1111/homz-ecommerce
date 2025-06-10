@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/add_payment_controller.dart';
-import 'package:timberr/widgets/buttons/custom_elevated_button.dart';
+import 'package:timberr/widgets/buttons/custom_button.dart';
 import 'package:timberr/widgets/cards/payment_card_view.dart';
 import 'package:timberr/widgets/input/custom_input_box.dart';
 
@@ -80,7 +80,12 @@ class AddPaymentScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "ADD PAYMENT METHOD",
-          style: kMerriweatherBold16,
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+            color: kOffBlack,
+          ),
         ),
       ),
       body: GestureDetector(
@@ -117,6 +122,7 @@ class AddPaymentScreen extends StatelessWidget {
                   onChanged: _nameOnChanged,
                   validator: _nameValidator,
                 ),
+                const SizedBox(height: 16),
                 CustomInputBox(
                   headerText: "Card Number",
                   hintText: "Ex: XXXX XXXX XXXX 3456",
@@ -126,6 +132,7 @@ class AddPaymentScreen extends StatelessWidget {
                   onChanged: _cardNumberOnChanged,
                   validator: _cardNumberValidator,
                 ),
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
@@ -153,9 +160,10 @@ class AddPaymentScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                CustomElevatedButton(
+                CustomButton(
+                  height: 52,
                   onTap: _addCard,
-                  text: "ADD NEW CARD",
+                  child: const Text("ADD NEW CARD"),
                 ),
               ],
             ),
