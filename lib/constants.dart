@@ -26,9 +26,6 @@ const kColorText = Color(0xFF0E1415);
 const kGrayText = Color(0xFFADB9BA);
 const kDivider = Color(0xFFD6DCDC);
 
-const String supabaseUrl = "https://yyatkmqoydfwfolblruu.supabase.co";
-const String supabaseAnonKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5YXRrbXFveWRmd2ZvbGJscnV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0NDAzNDQsImV4cCI6MjA2NDAxNjM0NH0.g0uIIvWhHiqnnspw5nV1YvXHmZFlytlJkcVAcnBeQ6s";
 const kNunitoSans10Grey =
     TextStyle(fontFamily: "NunitoSans", fontSize: 10, color: kGrey);
 const kNunitoSans12Grey =
@@ -248,3 +245,5 @@ const kShippingAddress = "Shipping Address";
 const kAddShipping = "Add Shipping";
 const kEditShipping = "Edit Shipping";
 const kPaymentMethods = "Payment Methods";
+const kCategories = "Categories";
+const kOrders = "Orders";

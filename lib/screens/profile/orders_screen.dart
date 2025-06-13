@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/order_controller.dart';
 import 'package:timberr/models/order_status.dart';
-import 'package:timberr/widgets/cards/order_card.dart';
 import 'package:timberr/widgets/order_list_tile.dart';
 
 class OrdersScreen extends StatelessWidget {
@@ -38,34 +37,39 @@ class OrdersScreen extends StatelessWidget {
               ),
             ),
             bottom: TabBar(
+              isScrollable: true,
               labelColor: kOffBlack,
-              labelStyle: kNunitoSansBold18,
+              labelStyle: const TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF325052)),
               unselectedLabelColor: kTinGrey,
-              unselectedLabelStyle: kNunitoSans18,
-              indicator: BoxDecoration(
-                color: kOffBlack,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              indicatorSize: TabBarIndicatorSize.label,
+              unselectedLabelStyle: const TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: kBasaltGrey),
+              indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 2,
-              indicatorColor: kOffBlack,
-              indicatorPadding:
-                  const EdgeInsets.only(left: 16, right: 16, top: 43),
+              indicatorColor: const Color(0xFF325052),
+              // indicatorPadding:
+              //     const EdgeInsets.only(left: 16, right: 16, top: 43),
               tabs: [
                 Tab(
-                  text: OrderStatus.pending.name,
+                  text: OrderStatus.pending.displayName,
                 ),
                 Tab(
-                  text: OrderStatus.pickUp.name,
+                  text: OrderStatus.pickUp.displayName,
                 ),
                 Tab(
-                  text: OrderStatus.shipping.name,
+                  text: OrderStatus.shipping.displayName,
                 ),
                 Tab(
-                  text: OrderStatus.delivered.name,
+                  text: OrderStatus.delivered.displayName,
                 ),
                 Tab(
-                  text: OrderStatus.canceled.name,
+                  text: OrderStatus.canceled.displayName,
                 ),
               ],
             ),
@@ -95,7 +99,7 @@ class OrdersScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return OrderListTile(
-                              order: orderController.shippingOrderList[index]);
+                              order: orderController.pickUpOrderList[index]);
                         },
                       ),
                       ListView.builder(
@@ -114,13 +118,8 @@ class OrdersScreen extends StatelessWidget {
                             horizontal: 20, vertical: 20),
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return OrderCard(
-                            orderNumber: (index + 1) * 102,
-                            dateString: "22/04/2022",
-                            quantity: index % 5 + 1,
-                            totalAmount: (index + 1) * 40,
-                            orderStatus: 2,
-                          );
+                          return OrderListTile(
+                              order: orderController.deliveredOrderList[index]);
                         },
                       ),
                       ListView.builder(

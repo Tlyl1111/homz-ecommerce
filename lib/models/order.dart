@@ -11,6 +11,7 @@ class Order {
   final String imageUrl;
   final String productName;
   final String color;
+  final bool isReviewed;
 
   Order({
     required this.orderId,
@@ -23,6 +24,7 @@ class Order {
     required this.imageUrl,
     required this.productName,
     required this.color,
+    required this.isReviewed,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class Order {
       shippingAddressId: json['shipping_address_id'],
       productName: json['product_name'],
       color: json['color'],
+      isReviewed: json['is_reviewed'] ?? false,
     );
   }
 
@@ -53,6 +56,7 @@ class Order {
       'image_url': imageUrl,
       'product_name': productName,
       'color': color,
+      'is_reviewed': isReviewed,
     };
 
     data['order_id'] = orderId;

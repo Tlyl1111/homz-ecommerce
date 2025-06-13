@@ -7,12 +7,18 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.suffixIcon,
     this.enabled = true,
+    this.onChanged,
+    this.minLines,
+    this.maxLines,
   });
 
   final String hintText;
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final bool? enabled;
+  final Function(String)? onChanged;
+  final int? minLines;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +37,9 @@ class CustomTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         hintText: hintText,
       ),
+      onChanged: onChanged,
+      minLines: minLines,
+      maxLines: maxLines,
     );
   }
 }

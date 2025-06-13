@@ -34,7 +34,12 @@ class PaymentMethodsScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "PAYMENT METHOD",
-          style: kMerriweatherBold16,
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+            color: kOffBlack,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

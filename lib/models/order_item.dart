@@ -1,6 +1,6 @@
 class OrderItem {
   final int orderItemId;
-  final int orderId;
+  final String orderId;
   final int productId;
   final int quantity;
   final double unitPrice;
@@ -38,11 +38,11 @@ class OrderItem {
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
-      orderItemId: json['order_item_id'],
+      orderItemId: json['id'],
       orderId: json['order_id'],
       productId: json['product_id'],
       quantity: json['quantity'],
-      unitPrice: json['unit_price'],
+      unitPrice: json['unit_price']?.toDouble() ?? 0,
       colorName: json['color_name'],
       productName: json['product_name'],
       imageUrl: json['image_url'],

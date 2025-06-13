@@ -27,7 +27,10 @@ class OrderController extends GetxController {
 
   Future<void> getOrders() async {
     try {
-      final response = await _supabaseInstance.client.from('Orders').select();
+      final response = await _supabaseInstance.client
+          .from('Orders')
+          .select('*')
+          .eq('user_id', _supabaseInstance.client.auth.currentUser!.id);
       List responseList = response;
       debugPrint(responseList.toString());
       final orderList = responseList
@@ -54,5 +57,12 @@ class OrderController extends GetxController {
       debugPrint('Error loading orders: $e');
       update();
     }
+  }
+
+  Future<void> refreshOrders() async {
+    isLoading.value = true;
+    await getOrders();
+    isLoading.value = false;
+    update();
   }
 }

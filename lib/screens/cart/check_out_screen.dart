@@ -120,22 +120,6 @@ class CheckOutScreen extends StatelessWidget {
                 }
               },
             ),
-            // const Spacer(),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Text(
-            //       "Payment",
-            //       style: kNunitoSansSemiBold18.copyWith(
-            //         color: kTinGrey,
-            //       ),
-            //     ),
-            //     IconButton(
-            //       onPressed: _toPaymentMethodsScreen,
-            //       icon: SvgPicture.asset("assets/icons/edit_icon.svg"),
-            //     ),
-            //   ],
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -167,14 +151,6 @@ class CheckOutScreen extends StatelessWidget {
                 height: 69,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  // color: Colors.white,
-                  // boxShadow: const [
-                  //   BoxShadow(
-                  //     color: Color(0x408A959E),
-                  //     offset: Offset(0, 8),
-                  //     blurRadius: 40,
-                  //   )
-                  // ],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -212,22 +188,6 @@ class CheckOutScreen extends StatelessWidget {
                 ),
               );
             }),
-            // const Spacer(),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Text(
-            //       "Delivery method",
-            //       style: kNunitoSansSemiBold18.copyWith(
-            //         color: kTinGrey,
-            //       ),
-            //     ),
-            //     IconButton(
-            //       onPressed: () {},
-            //       icon: SvgPicture.asset("assets/icons/edit_icon.svg"),
-            //     ),
-            //   ],
-            // ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -246,14 +206,6 @@ class CheckOutScreen extends StatelessWidget {
               height: 54,
               width: double.infinity,
               decoration: BoxDecoration(
-                // color: Colors.white,
-                // boxShadow: const [
-                //   BoxShadow(
-                //     color: Color(0x408A959E),
-                //     offset: Offset(0, 8),
-                //     blurRadius: 40,
-                //   )
-                // ],
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(

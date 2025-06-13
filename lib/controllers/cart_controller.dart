@@ -15,28 +15,77 @@ class CartController extends GetxController {
   final _supabaseClient = Supabase.instance.client;
 
   Future<void> fetchCartItems() async {
-    isLoading.value = true;
-    final response = await _supabaseClient
-        .from('Users')
-        .select()
-        .eq("Uid", _supabaseClient.auth.currentUser!.id);
-    cartIdList = jsonDecode(response[0]['cartList']);
-    for (int i = 0; i < cartIdList.length; i++) {
-      final cartResponse = await _supabaseClient
-          .from('Cart_Items')
+    try {
+      isLoading.value = true;
+      total.value = 0;
+      cartList.clear();
+
+      // Get user data
+      final response = await _supabaseClient
+          .from('Users')
           .select()
-          .eq("cart_id", cartIdList[i]);
-      final productResponse = await _supabaseClient
-          .from('Products')
-          .select()
-          .eq("product_id", cartResponse[0]['product_id']);
-      cartList.add(CartItem(cartIdList[i], cartResponse[0]['quantity'],
-          cartResponse[0]['color'], productResponse[0]));
-      total.value = total.value +
-          (cartList.elementAt(i).quantity * cartList.elementAt(i).price);
+          .eq("Uid", _supabaseClient.auth.currentUser!.id);
+
+      if (response.isEmpty) {
+        return;
+      }
+
+      cartIdList = jsonDecode(response[0]['cartList']);
+      debugPrint("Cart responseList: $response");
+
+      if (cartIdList.isEmpty) {
+        return;
+      }
+
+      // Fetch all cart items in parallel
+      final cartResponses = await Future.wait(
+        cartIdList.map((cartId) =>
+            _supabaseClient.from('Cart_Items').select().eq("cart_id", cartId)),
+      );
+
+      // Prepare a list of valid cart items and their indices
+      final validCartItems = <Map<String, dynamic>>[];
+      final validIndices = <int>[];
+
+      for (int i = 0; i < cartResponses.length; i++) {
+        if (cartResponses[i].isNotEmpty) {
+          validCartItems.add(cartResponses[i][0]);
+          validIndices.add(i);
+        }
+      }
+
+      if (validCartItems.isEmpty) {
+        return;
+      }
+
+      // Fetch all product data in parallel
+      final productResponses = await Future.wait(
+        validCartItems.map((item) => _supabaseClient
+            .from('Products')
+            .select()
+            .eq("product_id", item['product_id'])),
+      );
+
+      // Add valid products to cart
+      for (int i = 0; i < productResponses.length; i++) {
+        if (productResponses[i].isNotEmpty) {
+          final cartItem = validCartItems[i];
+          final productData = productResponses[i][0];
+          final cartId = cartIdList[validIndices[i]];
+
+          cartList.add(CartItem(
+              cartId, cartItem['quantity'], cartItem['color'], productData));
+          final price = (productData['price'] as num?)?.toInt() ?? 0;
+          final quantity = (cartItem['quantity'] as num?)?.toInt() ?? 0;
+          total.value = total.value + (quantity * price);
+        }
+      }
+    } catch (e) {
+      debugPrint("Error fetching cart items: $e");
+    } finally {
+      isLoading.value = false;
+      update();
     }
-    isLoading.value = false;
-    update();
   }
 
   int findProduct(Product product, Color color) {

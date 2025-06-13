@@ -42,7 +42,12 @@ class SettingsScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "SETTING",
-          style: kMerriweatherBold16,
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+            color: kOffBlack,
+          ),
         ),
       ),
       body: GetBuilder<UserController>(
@@ -56,7 +61,12 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   const Text(
                     "Personal Information",
-                    style: kNunitoSansSemiBold16TinGrey,
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: kTinGrey,
+                    ),
                   ),
                   IconButton(
                     onPressed: _toEditPersonalInfoScreen,
@@ -79,7 +89,12 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   const Text(
                     "Password",
-                    style: kNunitoSansSemiBold16TinGrey,
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: kTinGrey,
+                    ),
                   ),
                   IconButton(
                     onPressed: _userController.resetPassword,
@@ -94,7 +109,12 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 25),
               const Text(
                 "Notifications",
-                style: kNunitoSansSemiBold16TinGrey,
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: kTinGrey,
+                ),
               ),
               const SizedBox(height: 10),
               SettingRowTile(
@@ -132,13 +152,18 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 25),
               const Text(
                 "Help Center",
-                style: kNunitoSansSemiBold16TinGrey,
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: kTinGrey,
+                ),
               ),
               const SizedBox(height: 10),
               SettingRowTile(
                 fieldName: "FAQ",
                 action: GestureDetector(
-                  onTap: _toFAQ,
+                  onTap: () {},
                   child: const Icon(
                     Icons.arrow_forward_ios,
                     color: kTinGrey,

@@ -9,8 +9,7 @@ class OnBoardingWelcomeScreen extends StatefulWidget {
   const OnBoardingWelcomeScreen({super.key});
 
   @override
-  _OnBoardingWelcomeScreenState createState() =>
-      _OnBoardingWelcomeScreenState();
+  _OnBoardingWelcomeScreenState createState() => _OnBoardingWelcomeScreenState();
 }
 
 class _OnBoardingWelcomeScreenState extends State<OnBoardingWelcomeScreen> {
@@ -37,8 +36,7 @@ class _OnBoardingWelcomeScreenState extends State<OnBoardingWelcomeScreen> {
               _buildPage(
                 imagePath: 'assets/onboarding_1.png',
                 title: 'Discover',
-                subtitle:
-                    'Unlock a world of stunning furniture and\ndecor for your perfect home',
+                subtitle: 'Unlock a world of stunning furniture and\ndecor for your perfect home',
                 buttonText: 'Start Exploring',
                 onButtonPressed: () {
                   _pageController.nextPage(
@@ -52,8 +50,7 @@ class _OnBoardingWelcomeScreenState extends State<OnBoardingWelcomeScreen> {
               _buildPage(
                 imagePath: 'assets/onboarding_2.png',
                 title: 'Customize',
-                subtitle:
-                    'Bring your unique vision to life\nwith personalized interior solutions',
+                subtitle: 'Bring your unique vision to life\nwith personalized interior solutions',
                 buttonText: 'Design Your Space',
                 onButtonPressed: () {
                   _pageController.nextPage(
@@ -67,8 +64,7 @@ class _OnBoardingWelcomeScreenState extends State<OnBoardingWelcomeScreen> {
               _buildPage(
                 imagePath: 'assets/onboarding_3.png',
                 title: 'Smart Shopping',
-                subtitle:
-                    'Experience hassle-free furniture shopping\nwith quality, affordability, convenience',
+                subtitle: 'Experience hassle-free furniture shopping\nwith quality, affordability, convenience',
                 buttonText: 'Shop now',
                 onButtonPressed: _toLoginScreen,
                 textAboveImage: true,
@@ -120,9 +116,7 @@ class _OnBoardingWelcomeScreenState extends State<OnBoardingWelcomeScreen> {
             const SizedBox(height: 80),
             Text(title, style: HTextTheme.title32SemiBoldDark),
             const SizedBox(height: 15),
-            Text(subtitle,
-                style: HTextTheme.body16LightLight,
-                textAlign: TextAlign.center),
+            Text(subtitle, style: HTextTheme.body16LightLight, textAlign: TextAlign.center),
             const SizedBox(height: 20),
           ],
           Expanded(
@@ -135,14 +129,10 @@ class _OnBoardingWelcomeScreenState extends State<OnBoardingWelcomeScreen> {
           ),
           if (!textAboveImage) ...[
             const SizedBox(height: 20),
-            Text(title,
-                style: HTextTheme.title32SemiBoldDark
-                    .copyWith(color: Colors.white)),
+            Text(title, style: HTextTheme.title32SemiBoldDark.copyWith(color: Colors.white)),
             const SizedBox(height: 15),
             Text(subtitle,
-                style:
-                    HTextTheme.body16LightLight.copyWith(color: Colors.white),
-                textAlign: TextAlign.center),
+                style: HTextTheme.body16LightLight.copyWith(color: Colors.white), textAlign: TextAlign.center),
             const SizedBox(height: 20),
           ],
           Padding(
