@@ -27,15 +27,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void _toReviewScreen() {
-    Get.to(
-      () => const MyReviewsScreen(),
-      transition: Transition.cupertino,
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeOut,
-    );
-  }
-
   void _toPaymentMethodsScreen() {
     Get.to(
       () => PaymentMethodsScreen(),
@@ -142,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
               const Spacer(flex: 2),
               ProfileTile(
                 name: "My Orders",
-                description: "Already have 10 orders",
+                description: "Already have orders",
                 onTap: _toOrdersScreen,
               ),
               const Spacer(),
@@ -169,12 +160,6 @@ class ProfileScreen extends StatelessWidget {
                   onTap: _toPaymentMethodsScreen,
                 );
               }),
-              const Spacer(),
-              ProfileTile(
-                name: "My Reviews",
-                description: "Reviews for 5 items",
-                onTap: _toReviewScreen,
-              ),
               const Spacer(),
               ProfileTile(
                 name: "Setting",

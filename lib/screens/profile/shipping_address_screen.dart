@@ -73,35 +73,6 @@ class ShippingAddressScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return Row(
               children: [
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     // SizedBox(
-                //     //   height: 20,
-                //     //   child: Checkbox(
-                //     //     value: (addressController.selectedIndex == index)
-                //     //         ? true
-                //     //         : false,
-                //     //     onChanged: (isSelected) {
-                //     //       addressController.setDefaultShippingAddress(index);
-                //     //     },
-                //     //     activeColor: kOffBlack,
-                //     //     shape: RoundedRectangleBorder(
-                //     //       borderRadius: BorderRadius.circular(4),
-                //     //     ),
-                //     //     splashRadius: 20,
-                //     //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                //     //   ),
-                //     // ),
-                //     Text(
-                //       "Use as the shipping address",
-                //       style: kNunitoSans18.copyWith(
-                //         color: kGrey,
-                //       ),
-                //     )
-                //   ],
-                // ),
-                // const SizedBox(height: 15),
                 Expanded(
                   child: AddressCard(
                     address: addressController.addressList[index],
@@ -122,7 +93,6 @@ class ShippingAddressScreen extends StatelessWidget {
                     color: kOffBlack,
                   ),
                 ),
-                // const SizedBox(height: 30),
               ],
             );
           },

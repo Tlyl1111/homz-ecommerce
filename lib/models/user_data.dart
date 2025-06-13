@@ -5,8 +5,8 @@ class UserData {
   bool newArrivalsNotification;
   bool deliveryStatusNotification;
   bool salesNotification;
-  int defaultShippingId;
-  int defaultCardDetailId;
+  int? defaultShippingId;
+  int? defaultCardDetailId;
   UserData({
     this.name = "",
     this.email = "",

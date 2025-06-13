@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timberr/constants.dart';
@@ -84,6 +85,7 @@ class AuthController extends GetxController {
         email: email.value,
         password: password.value,
       );
+
       if (response.session != null) {
         await _supabaseInstance.from('Users').insert({
           'Name': name.value,
@@ -92,9 +94,11 @@ class AuthController extends GetxController {
           'favoritesList': [],
           'cartList': [],
         });
-        Get.offAllNamed(AppRoutes.home);
       }
+
+      Get.offAllNamed(AppRoutes.wrapper);
     } on AuthException catch (error) {
+      debugPrint(error.toString());
       kDefaultDialog("Error", error.message);
     } catch (error) {
       kDefaultDialog("Error", 'Some Unknown Error occurred');

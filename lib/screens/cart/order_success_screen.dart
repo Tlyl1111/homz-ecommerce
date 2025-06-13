@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timberr/constants.dart';
-import 'package:timberr/screens/profile/orders_screen.dart';
 import 'package:timberr/widgets/buttons/custom_button.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
@@ -10,17 +9,6 @@ class OrderSuccessScreen extends StatelessWidget {
   void _offToHome() {
     Get.back();
     Get.back();
-  }
-
-  void _offToOrderScreen() {
-    Get.back();
-    Get.back();
-    Get.to(
-      () => OrdersScreen(),
-      transition: Transition.cupertino,
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeOut,
-    );
   }
 
   @override
@@ -39,6 +27,12 @@ class OrderSuccessScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Spacer(),
+                Image.asset(
+                  "assets/check.png",
+                  height: 100,
+                  width: 100,
+                ),
+                const SizedBox(height: 20),
                 const Text(
                   "Payment Successful!",
                   style: TextStyle(

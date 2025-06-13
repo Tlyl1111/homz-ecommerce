@@ -21,7 +21,7 @@ class DetailTab extends StatelessWidget {
                 Text(
                   product.name,
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                     fontFamily: "Poppins",
                     color: Color(0xFF325052),
@@ -83,7 +83,7 @@ class DetailTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     child: const TabBar(
                       indicatorColor: Color(0xFF325052),
                       labelColor: Color(0xFF325052),

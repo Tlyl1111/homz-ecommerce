@@ -4,7 +4,6 @@ import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/auth_controller.dart';
 import 'package:timberr/utils/font_style.dart';
 import 'package:timberr/widgets/buttons/primary_button.dart';
-import 'package:timberr/widgets/buttons/secondary_button.dart';
 import 'package:timberr/widgets/input/custom_input_box.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -99,54 +98,6 @@ class LoginScreen extends StatelessWidget {
                       onTap: controller.signIn,
                     ),
                     const SizedBox(height: 40),
-                    Row(
-                      children: [
-                        const Expanded(
-                          child: Divider(
-                            thickness: 1,
-                            color: kDivider,
-                            endIndent: 10,
-                          ),
-                        ),
-                        Text(
-                          "Or",
-                          style: HTextTheme.body12MediumDark
-                              .copyWith(color: kDivider),
-                        ),
-                        const Expanded(
-                          child: Divider(
-                            thickness: 1,
-                            color: kDivider,
-                            indent: 10,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 40),
-                    SecondaryButton(
-                      text: "Sign in with Google",
-                      onTap: () {
-                        // Add Google sign-in logic here
-                      },
-                      imagePath: "assets/icons/ic_google.png",
-                    ),
-                    const SizedBox(height: 15),
-                    SecondaryButton(
-                      text: "Sign in with Facebook",
-                      onTap: () {
-                        // Add Facebook sign-in logic here
-                      },
-                      imagePath: "assets/icons/ic_facebook.png",
-                    ),
-                    const SizedBox(height: 15),
-                    SecondaryButton(
-                      text: "Sign in with Apple",
-                      onTap: () {
-                        // Add Apple sign-in logic here
-                      },
-                      imagePath: "assets/icons/ic_apple.png",
-                    ),
-                    const SizedBox(height: 20),
                   ],
                 ),
               ),

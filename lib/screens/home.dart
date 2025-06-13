@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/home_controller.dart';
 import 'package:timberr/screens/search_delegate/product_search_delegate.dart';
+import 'package:timberr/utils/app_routes.dart';
 import 'package:timberr/widgets/input/custom_text_field.dart';
 import 'package:timberr/widgets/tabbed/bottom_nav.dart';
 import 'package:timberr/widgets/tiles/product_grid_tile.dart';
@@ -79,11 +80,14 @@ class _HomeState extends State<Home> {
               actions: [
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
-                  child: Image.asset(
-                    'assets/notification.png',
-                    height: 48,
-                    width: 48,
-                    fit: BoxFit.contain,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.qr_code,
+                      color: kColorPrimary,
+                    ),
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.qr);
+                    },
                   ),
                 ),
               ],
@@ -94,7 +98,7 @@ class _HomeState extends State<Home> {
                 id: kHome,
                 builder: (controller) {
                   return SizedBox(
-                    height: 342,
+                    height: 348,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -127,7 +131,7 @@ class _HomeState extends State<Home> {
                                 ),
                               )
                             : SizedBox(
-                                height: 279, // đủ cao để hiển thị item
+                                height: 285, // đủ cao để hiển thị item
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
@@ -225,7 +229,7 @@ class MySearchBar extends StatelessWidget implements PreferredSizeWidget {
         showSearch(context: context, delegate: ProductSearchDelegate());
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: CustomTextField(
           hintText: "Find Your Style Here",
           enabled: false,

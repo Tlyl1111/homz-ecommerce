@@ -38,7 +38,7 @@ class RegisterScreen extends StatelessWidget {
                         CustomInputBox(
                           headerText: "Full Name",
                           hintText: "Enter your full name",
-                          textInputType: TextInputType.phone,
+                          textInputType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           onChanged: controller.nameOnChanged,
                           validator: controller.nameValidator,

@@ -15,18 +15,45 @@ class FavoritesController extends GetxController {
   }
 
   Future<void> fetchFavorites() async {
-    final response = await _supabaseClient
-        .from("Users")
-        .select()
-        .eq("Uid", _supabaseClient.auth.currentUser!.id);
-    List responseList = jsonDecode(response[0]['favoritesList']);
-    debugPrint("Favorites responseList: ${responseList.toString()}");
-    for (int i = 0; i < responseList.length; i++) {
-      final productResponse = await _supabaseClient
-          .from('Products')
+    try {
+      final response = await _supabaseClient
+          .from("Users")
           .select()
-          .eq("product_id", responseList[i]);
-      favoritesList.add(Product.fromJson(productResponse[0]));
+          .eq("Uid", _supabaseClient.auth.currentUser!.id)
+          .limit(1)
+          .maybeSingle();
+
+      if (response == null || response['favoritesList'] == null) {
+        favoritesList.clear();
+        return;
+      }
+
+      final List<dynamic> rawList = jsonDecode(response['favoritesList']);
+      final List<int> favoriteIds =
+          rawList.map((e) => (e as num).toInt()).toList();
+      debugPrint("Favorites ID List: $favoriteIds");
+
+      final futures = favoriteIds.map((productId) async {
+        final productResponse = await _supabaseClient
+            .from('Products')
+            .select()
+            .eq("product_id", productId)
+            .limit(1)
+            .maybeSingle();
+
+        if (productResponse != null) {
+          return Product.fromJson(productResponse);
+        }
+        return null;
+      });
+
+      final results = await Future.wait(futures);
+
+      favoritesList
+        ..clear()
+        ..addAll(results.whereType<Product>());
+    } catch (e, st) {
+      debugPrint('fetchFavorites error: $e\n$st');
     }
   }
 

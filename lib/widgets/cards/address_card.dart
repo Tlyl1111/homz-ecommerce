@@ -14,18 +14,6 @@ class AddressCard extends StatelessWidget {
       required this.address,
       required this.index});
 
-  void _onEditTap() {
-    Get.to(
-      () => EditShippingScreen(
-        initialAddress: address,
-        index: index,
-      ),
-      transition: Transition.cupertino,
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -37,24 +25,28 @@ class AddressCard extends StatelessWidget {
         children: [
           Image.asset("assets/location.png", height: 32, width: 32),
           const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                address.name,
-                style: kNunitoSansBold18,
-              ),
-              Text(
-                address.displayAddress(),
-                style: kNunitoSans14.copyWith(
-                  color: kGrey,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  address.name,
+                  style: kNunitoSansBold18.copyWith(
+                      overflow: TextOverflow.ellipsis),
+                  maxLines: 1,
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
+                Text(
+                  address.displayAddress(),
+                  style: kNunitoSans14.copyWith(
+                    color: kGrey,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
